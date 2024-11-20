@@ -24,7 +24,13 @@ public class SecurityConfiguration {
 
 
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
-            "/auth/login"
+            "/auth/login",
+            "/api/usuario/listar",
+            "/api/reuniao",
+            "/api/pauta",
+            "/api/membros-participantes",
+            "/api/reuniao/listar",
+            "/api/reuniao/detalhes/{id}"
 
     };
 
