@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/api/reuniao")
-
 public class ReuniaoController {
     @Autowired
     private ReuniaoService reuniaoService;
