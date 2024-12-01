@@ -17,6 +17,9 @@ public class ReuniaoService {
     @Autowired
     private ReuniaoRepository reuniaoRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public Reuniao criarReuniao(ReuniaoRequestDTO data){
         Reuniao reuniao = new Reuniao();
         reuniao.setTitulo(data.titulo());
@@ -26,7 +29,12 @@ public class ReuniaoService {
         reuniao.setPautas(data.pautas());
         reuniao.getPautas().forEach(pauta -> pauta.setReuniao(reuniao));
         reuniao.setMembrosParticipantes(data.membrosParticipantes());
-        reuniao.getMembrosParticipantes().forEach(membrosParticipantes -> membrosParticipantes.setReuniao(reuniao));
+        reuniao.getMembrosParticipantes().forEach(membrosParticipantes ->{
+                membrosParticipantes.setReuniao(reuniao);
+        emailService.enviarEmail(membrosParticipantes.getEmail(), "Nova reunião da associação",
+                "Você foi convidado para a reunião " + reuniao.getTitulo() +
+                        " no dia " + reuniao.getDataHora() + " no local " + reuniao.getLocal());
+        });
         return reuniaoRepository.save(reuniao);
     }
 
