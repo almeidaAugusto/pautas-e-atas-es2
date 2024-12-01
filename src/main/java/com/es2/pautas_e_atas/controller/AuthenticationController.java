@@ -1,8 +1,8 @@
 package com.es2.pautas_e_atas.controller;
 
 import com.es2.pautas_e_atas.config.TokenService;
-import com.es2.pautas_e_atas.domain.Usuario.AuthenticationDTO;
-import com.es2.pautas_e_atas.domain.Usuario.LoginResponseDTO;
+import com.es2.pautas_e_atas.domain.Usuario.DTOs.AuthenticationDTO;
+import com.es2.pautas_e_atas.domain.Usuario.DTOs.LoginResponseDTO;
 import com.es2.pautas_e_atas.domain.Usuario.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

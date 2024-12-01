@@ -1,10 +1,11 @@
-package com.es2.pautas_e_atas.domain.Reuniao;
+package com.es2.pautas_e_atas.domain.Reuniao.DTOs;
 
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantes;
+import com.es2.pautas_e_atas.domain.Pauta.Pauta;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public record ReuniaoRequestDTO(@NotNull(message = "Titulo é obrigatórias")
                                 String titulo,

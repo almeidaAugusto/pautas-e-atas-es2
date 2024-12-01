@@ -1,7 +1,7 @@
 package com.es2.pautas_e_atas.controller;
 
-import com.es2.pautas_e_atas.domain.Reuniao.Pauta;
-import com.es2.pautas_e_atas.domain.Reuniao.PautaRequestDTO;
+import com.es2.pautas_e_atas.domain.Pauta.Pauta;
+import com.es2.pautas_e_atas.domain.Pauta.PautaRequestDTO;
 import com.es2.pautas_e_atas.service.PautaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

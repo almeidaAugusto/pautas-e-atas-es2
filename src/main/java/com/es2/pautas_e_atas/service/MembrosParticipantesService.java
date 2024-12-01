@@ -1,13 +1,11 @@
 package com.es2.pautas_e_atas.service;
 
-import com.es2.pautas_e_atas.domain.Reuniao.MembrosParticipantes;
-import com.es2.pautas_e_atas.domain.Reuniao.MembrosParticipantesRequestDTO;
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantes;
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantesRequestDTO;
 import com.es2.pautas_e_atas.repositories.MembrosParticipantesRepository;
 import com.es2.pautas_e_atas.repositories.ReuniaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 public class MembrosParticipantesService {

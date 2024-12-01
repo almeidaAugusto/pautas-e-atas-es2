@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Map;
 
 @Service
 public class TokenService {
@@ -24,7 +25,7 @@ public class TokenService {
              Algorithm algorithm = Algorithm.HMAC256(secret);
              String token = JWT.create()
                      .withIssuer("Pautas-Atas")
-                     .withSubject(usuario.getEmail())
+                     .withClaim("user", Map.of("email", usuario.getEmail(), "tipoUsuario", usuario.getTipoUsuario().name()))
                      .withExpiresAt(genExpirationDate())
                      .sign(algorithm);
              return token;
@@ -40,7 +41,39 @@ public class TokenService {
                     .withIssuer("Pautas-Atas")
                     .build()
                     .verify(token)
-                    .getSubject();
+                    .getClaim("user")
+                    .asMap()
+                    .get("email").toString();
+        } catch (JWTVerificationException exception) {
+            return "";
+        }
+    }
+
+    public String getEmailFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("Pautas-Atas")
+                    .build()
+                    .verify(token)
+                    .getClaim("user")
+                    .asMap()
+                    .get("email").toString();
+        } catch (JWTVerificationException exception) {
+            return "";
+        }
+    }
+
+    public String getTipoUsuarioFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("Pautas-Atas")
+                    .build()
+                    .verify(token)
+                    .getClaim("user")
+                    .asMap()
+                    .get("tipoUsuario").toString();
         } catch (JWTVerificationException exception) {
             return "";
         }

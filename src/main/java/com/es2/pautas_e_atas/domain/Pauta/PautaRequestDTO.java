@@ -1,4 +1,4 @@
-package com.es2.pautas_e_atas.domain.Reuniao;
+package com.es2.pautas_e_atas.domain.Pauta;
 
 import jakarta.validation.constraints.NotNull;
 

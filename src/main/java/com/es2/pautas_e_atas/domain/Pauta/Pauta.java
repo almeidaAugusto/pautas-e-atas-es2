@@ -1,5 +1,6 @@
-package com.es2.pautas_e_atas.domain.Reuniao;
+package com.es2.pautas_e_atas.domain.Pauta;
 
+import com.es2.pautas_e_atas.domain.Reuniao.Reuniao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

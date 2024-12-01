@@ -1,4 +1,4 @@
-package com.es2.pautas_e_atas.domain.Reuniao;
+package com.es2.pautas_e_atas.domain.MembroParticipante;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

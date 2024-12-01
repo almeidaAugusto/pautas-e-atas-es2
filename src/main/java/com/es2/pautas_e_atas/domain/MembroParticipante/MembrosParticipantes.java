@@ -1,5 +1,6 @@
-package com.es2.pautas_e_atas.domain.Reuniao;
+package com.es2.pautas_e_atas.domain.MembroParticipante;
 
+import com.es2.pautas_e_atas.domain.Reuniao.Reuniao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
 
 @Table(name = "membros_participantes")

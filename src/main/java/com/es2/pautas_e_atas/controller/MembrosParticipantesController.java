@@ -1,8 +1,8 @@
 package com.es2.pautas_e_atas.controller;
 
 
-import com.es2.pautas_e_atas.domain.Reuniao.MembrosParticipantes;
-import com.es2.pautas_e_atas.domain.Reuniao.MembrosParticipantesRequestDTO;
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantes;
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantesRequestDTO;
 import com.es2.pautas_e_atas.service.MembrosParticipantesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

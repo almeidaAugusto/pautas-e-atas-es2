@@ -35,7 +35,6 @@ public class Usuario implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.tipoUsuario == TipoUsuario.GERENTE) return List.of(new SimpleGrantedAuthority("ROLE_GERENTE"), new SimpleGrantedAuthority("ROLE_MEMBRO"));
         else return List.of(new SimpleGrantedAuthority("ROLE_MEMBRO"));
-
     }
 
     @Override

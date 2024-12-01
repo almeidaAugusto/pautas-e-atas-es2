@@ -1,4 +1,7 @@
-package com.es2.pautas_e_atas.domain.Reuniao;
+package com.es2.pautas_e_atas.domain.Reuniao.DTOs;
+
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantes;
+import com.es2.pautas_e_atas.domain.Pauta.Pauta;
 
 import java.time.LocalDateTime;
 import java.util.List;

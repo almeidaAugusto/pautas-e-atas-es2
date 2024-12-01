@@ -1,6 +1,9 @@
 package com.es2.pautas_e_atas.domain.Reuniao;
 
 
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantes;
+import com.es2.pautas_e_atas.domain.Pauta.Pauta;
+import com.es2.pautas_e_atas.exceptions.InvalidDateException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +36,41 @@ public class Reuniao {
     @OneToMany(mappedBy = "reuniao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MembrosParticipantes> membrosParticipantes;
 
+    public void setAta(String ata) {
+        if(dataHora.toLocalDate().isEqual(LocalDateTime.now().toLocalDate())){
+            this.ata = ata;
+        } else {
+            throw new InvalidDateException("Não é possível adicionar ata se ela é diferente do dia atual");
+        }
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        if(dataHora.isAfter(LocalDateTime.now())){
+            this.dataHora = dataHora;
+        } else {
+            throw new InvalidDateException("Não é possível adicionar data e hora se ela é menor que a data e hora atual");
+        }
+    }
+
+    public void setMembrosParticipantes(List<MembrosParticipantes> membrosParticipantes) {
+        if (this.membrosParticipantes != null) {
+            this.membrosParticipantes.clear();
+            if (membrosParticipantes != null) {
+                this.membrosParticipantes.addAll(membrosParticipantes);
+            }
+        } else {
+            this.membrosParticipantes = membrosParticipantes;
+        }
+    }
+
+    public void setPautas(List<Pauta> pautas) {
+        if (this.pautas != null) {
+            this.pautas.clear();
+            if (pautas != null) {
+                this.pautas.addAll(pautas);
+            }
+        } else {
+            this.pautas = pautas;
+        }
+    }
 }

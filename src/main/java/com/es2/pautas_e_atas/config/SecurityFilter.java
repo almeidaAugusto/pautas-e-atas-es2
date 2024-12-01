@@ -1,6 +1,7 @@
 package com.es2.pautas_e_atas.config;
 
 
+import com.es2.pautas_e_atas.domain.Usuario.Usuario;
 import com.es2.pautas_e_atas.repositories.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,7 +26,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if (token != null){
             var email = tokenService.validateToken(token);
-            UserDetails user = usuarioRepository.findByEmail(email);
+            Usuario user = (Usuario) usuarioRepository.findByEmail(email);
 
             var authentication = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

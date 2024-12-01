@@ -1,14 +1,13 @@
 package com.es2.pautas_e_atas.service;
 
 import com.es2.pautas_e_atas.domain.Reuniao.Reuniao;
-import com.es2.pautas_e_atas.domain.Reuniao.ReuniaoDTO;
-import com.es2.pautas_e_atas.domain.Reuniao.ReuniaoDetalhesDTO;
-import com.es2.pautas_e_atas.domain.Reuniao.ReuniaoRequestDTO;
+import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoDTO;
+import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoDetalhesDTO;
+import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoRequestDTO;
 import com.es2.pautas_e_atas.repositories.ReuniaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,8 +28,6 @@ public class ReuniaoService {
         reuniao.setMembrosParticipantes(data.membrosParticipantes());
         reuniao.getMembrosParticipantes().forEach(membrosParticipantes -> membrosParticipantes.setReuniao(reuniao));
         return reuniaoRepository.save(reuniao);
-
-
     }
 
     public List<ReuniaoDTO> listarReunioes(){
@@ -59,4 +56,27 @@ public class ReuniaoService {
                 .orElse(null);
     }
 
+    public Reuniao adicionarAta(UUID id, String ata){
+        Reuniao reuniao = reuniaoRepository.findById(id).orElse(null);
+        if(reuniao != null){
+            reuniao.setAta(ata);
+            return reuniaoRepository.save(reuniao);
+        }
+        return null;
+    }
+
+    public Reuniao atualizarReuniao(UUID id, ReuniaoRequestDTO data){
+        Reuniao reuniao = reuniaoRepository.findById(id).orElse(null);
+        if(reuniao != null){
+            reuniao.setTitulo(data.titulo());
+            reuniao.setDataHora(data.dataHora());
+            reuniao.setLocal(data.local());
+            reuniao.setPautas(data.pautas());
+            reuniao.getPautas().forEach(pauta -> pauta.setReuniao(reuniao));
+            reuniao.setMembrosParticipantes(data.membrosParticipantes());
+            reuniao.getMembrosParticipantes().forEach(membrosParticipantes -> membrosParticipantes.setReuniao(reuniao));
+            return reuniaoRepository.save(reuniao);
+        }
+        return null;
+    }
 }
