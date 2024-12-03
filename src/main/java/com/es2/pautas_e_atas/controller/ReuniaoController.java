@@ -1,6 +1,8 @@
 package com.es2.pautas_e_atas.controller;
 
 
+import com.es2.pautas_e_atas.config.TokenService;
+import com.es2.pautas_e_atas.domain.Reuniao.DTOs.AddAtaRequestDTO;
 import com.es2.pautas_e_atas.domain.Reuniao.Reuniao;
 import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoDTO;
 import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoDetalhesDTO;
@@ -10,6 +12,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +26,10 @@ import java.util.UUID;
 public class ReuniaoController {
     @Autowired
     private ReuniaoService reuniaoService;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @PostMapping
     public ResponseEntity<?> criarReuniao(@Valid @RequestBody ReuniaoRequestDTO data) {
@@ -42,9 +50,24 @@ public class ReuniaoController {
     }
 
     @PutMapping("/adicionar-ata/{id}")
-    public ResponseEntity<?> adicionarAta(@PathVariable UUID id, @Valid @RequestBody Map<String, String> ataRequest) {
-        String ata = ataRequest.get("ata");
-        Reuniao reuniao = reuniaoService.adicionarAta(id, ata);
+    public ResponseEntity<?> adicionarAta(
+            @PathVariable UUID id,
+            @Valid @RequestBody AddAtaRequestDTO ataRequest,
+            @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        String token = authorizationHeader.replace("Bearer ", "").trim();
+
+        String usuarioEmailLogado = tokenService.getEmailFromToken(token);
+
+        var usernamePassword = new UsernamePasswordAuthenticationToken(usuarioEmailLogado, ataRequest.senha());
+        try {
+            authenticationManager.authenticate(usernamePassword);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("{\"error\": \"Email ou senha incorretos. Não é possível adicionar a ata.\"}");
+        }
+
+        Reuniao reuniao = reuniaoService.adicionarAta(id, ataRequest);
         return ResponseEntity.ok(reuniao);
     }
 

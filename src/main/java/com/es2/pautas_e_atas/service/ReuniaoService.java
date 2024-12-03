@@ -1,5 +1,6 @@
 package com.es2.pautas_e_atas.service;
 
+import com.es2.pautas_e_atas.domain.Reuniao.DTOs.AddAtaRequestDTO;
 import com.es2.pautas_e_atas.domain.Reuniao.Reuniao;
 import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoDTO;
 import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoDetalhesDTO;
@@ -64,10 +65,10 @@ public class ReuniaoService {
                 .orElse(null);
     }
 
-    public Reuniao adicionarAta(UUID id, String ata){
+    public Reuniao adicionarAta(UUID id, AddAtaRequestDTO data){
         Reuniao reuniao = reuniaoRepository.findById(id).orElse(null);
         if(reuniao != null){
-            reuniao.setAta(ata);
+            reuniao.setAta(data.ata());
             return reuniaoRepository.save(reuniao);
         }
         return null;

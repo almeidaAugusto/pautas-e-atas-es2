@@ -32,14 +32,14 @@ public class SecurityConfiguration {
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/auth/login",
             "/api/pauta",
-            "/api/reuniao/listar",
-            "/api/reuniao/detalhes/{id}",
     };
 
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
             "/api/reuniao/{id}",
             "/api/usuario/listar",
             "/api/usuario/{idUsuario}",
+            "/api/reuniao/listar",
+            "/api/reuniao/detalhes/{id}"
     };
 
     public static final String [] ENDPOINT_GERENTE = {
