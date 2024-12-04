@@ -48,6 +48,7 @@ public class SecurityConfiguration {
             "/api/reuniao",
             "/api/reuniao/{id}",
             "/api/membros-participantes",
+            "/api/reuniao/marcar-presenca/{id}"
     };
 
     @Bean
@@ -70,7 +71,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "htpp://127.0.0.1:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*")); // Permite todos os cabeçalhos
         configuration.setAllowCredentials(true); // Permite o envio de credenciais
         configuration.addExposedHeader("Authorization");

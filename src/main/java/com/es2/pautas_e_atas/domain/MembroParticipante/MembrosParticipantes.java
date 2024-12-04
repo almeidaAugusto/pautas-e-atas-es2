@@ -31,4 +31,5 @@ public class MembrosParticipantes {
         private Reuniao reuniao;
         private String nome;
         private String email;
+        private boolean estaPresente;
 }

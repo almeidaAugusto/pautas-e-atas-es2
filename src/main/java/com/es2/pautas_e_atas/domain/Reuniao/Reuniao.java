@@ -36,14 +36,6 @@ public class Reuniao {
     @OneToMany(mappedBy = "reuniao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MembrosParticipantes> membrosParticipantes;
 
-    public void setAta(String ata) {
-        if(dataHora.toLocalDate().isEqual(LocalDateTime.now().toLocalDate())){
-            this.ata = ata;
-        } else {
-            throw new InvalidDateException("Não é possível adicionar ata se ela é diferente do dia atual");
-        }
-    }
-
     public void setDataHora(LocalDateTime dataHora) {
         if(dataHora.isAfter(LocalDateTime.now())){
             this.dataHora = dataHora;

@@ -1,5 +1,6 @@
 package com.es2.pautas_e_atas.service;
 
+import com.es2.pautas_e_atas.domain.MembroParticipante.MembrosParticipantes;
 import com.es2.pautas_e_atas.domain.Reuniao.DTOs.AddAtaRequestDTO;
 import com.es2.pautas_e_atas.domain.Reuniao.Reuniao;
 import com.es2.pautas_e_atas.domain.Reuniao.DTOs.ReuniaoDTO;
@@ -39,15 +40,29 @@ public class ReuniaoService {
         return reuniaoRepository.save(reuniao);
     }
 
-    public List<ReuniaoDTO> listarReunioes(){
-        return reuniaoRepository.findAll().stream()
-                .map(reuniao -> new ReuniaoDTO(
-                        reuniao.getId().toString(),
-                        reuniao.getTitulo(),
-                        reuniao.getDataHora(),
-                        reuniao.getLocal()
-                ))
-                .collect(Collectors.toList());
+    public List<ReuniaoDTO> listarReunioes(String email, String role){
+        if(role.equals("GERENTE")){
+            return reuniaoRepository.findAll().stream()
+                    .map(reuniao -> new ReuniaoDTO(
+                            reuniao.getId().toString(),
+                            reuniao.getTitulo(),
+                            reuniao.getDataHora(),
+                            reuniao.getLocal()
+                    ))
+                    .collect(Collectors.toList());
+        } else {
+            return reuniaoRepository.findAll().stream()
+                    .filter(reuniao -> reuniao.getMembrosParticipantes().stream()
+                            .anyMatch(membrosParticipantes -> membrosParticipantes.getEmail().equals(email)))
+                    .map(reuniao -> new ReuniaoDTO(
+                            reuniao.getId().toString(),
+                            reuniao.getTitulo(),
+                            reuniao.getDataHora(),
+                            reuniao.getLocal()
+                    ))
+                    .collect(Collectors.toList());
+        }
+
     }
 
     public ReuniaoDetalhesDTO detalhesReuniao(UUID id){
@@ -84,6 +99,22 @@ public class ReuniaoService {
             reuniao.getPautas().forEach(pauta -> pauta.setReuniao(reuniao));
             reuniao.setMembrosParticipantes(data.membrosParticipantes());
             reuniao.getMembrosParticipantes().forEach(membrosParticipantes -> membrosParticipantes.setReuniao(reuniao));
+            return reuniaoRepository.save(reuniao);
+        }
+        return null;
+    }
+
+    public Reuniao marcarPresenca(UUID id, List<MembrosParticipantes> membrosParticipantes){
+        Reuniao reuniao = reuniaoRepository.findById(id).orElse(null);
+        if(reuniao != null){
+            // Marcar presença
+            reuniao.getMembrosParticipantes().forEach(membro -> {
+                membrosParticipantes.forEach(membroParticipante -> {
+                    if(membro.getId().equals(membroParticipante.getId())){
+                        membro.setEstaPresente(membroParticipante.isEstaPresente());
+                    }
+                });
+            });
             return reuniaoRepository.save(reuniao);
         }
         return null;

@@ -1,0 +1,2 @@
+ALTER TABLE membros_participantes
+ADD COLUMN estaPresente BOOLEAN NOT NULL DEFAULT FALSE;

@@ -32,8 +32,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<UsuarioDTO>>listarUsuarios(){
-        List<UsuarioDTO> usuarios = usuarioService.listarUsuarios();
+    public ResponseEntity<List<UsuarioDTO>>listarUsuarios(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "").trim();
+        String email = tokenService.getEmailFromToken(token);
+        String role = tokenService.getTipoUsuarioFromToken(token);
+        List<UsuarioDTO> usuarios = usuarioService.listarUsuarios(email, role);
         return ResponseEntity.ok(usuarios);
     }
 

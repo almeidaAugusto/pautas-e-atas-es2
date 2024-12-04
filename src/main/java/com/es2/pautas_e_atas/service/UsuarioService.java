@@ -43,14 +43,27 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public List<UsuarioDTO> listarUsuarios() {
-        return usuarioRepository.findAll().stream()
-                .map(usuario -> new UsuarioDTO(
-                        usuario.getId().toString(),
-                        usuario.getNome(),
-                        usuario.getEmail(),
-                        usuario.getTipoUsuario().name()))
-                .collect(Collectors.toList());
+    public List<UsuarioDTO> listarUsuarios(String email, String role) {
+        if(role.equals("GERENTE")){
+            return usuarioRepository.findAll().stream()
+                    .map(usuario -> new UsuarioDTO(
+                            usuario.getId().toString(),
+                            usuario.getNome(),
+                            usuario.getEmail(),
+                            usuario.getTipoUsuario().toString()
+                    ))
+                    .collect(Collectors.toList());
+        } else {
+            return usuarioRepository.findAll().stream()
+                    .filter(usuario -> usuario.getEmail().equals(email))
+                    .map(usuario -> new UsuarioDTO(
+                            usuario.getId().toString(),
+                            usuario.getNome(),
+                            usuario.getEmail(),
+                            usuario.getTipoUsuario().toString()
+                    ))
+                    .collect(Collectors.toList());
+        }
     }
 
     public Usuario atualizarUsuario(UsuarioUpdateRequestDTO data, String emailUsuarioLogado, String idUsuario, String tipoUsuarioLogado) {
